@@ -1,0 +1,126 @@
+[gd_scene load_steps=19 format=3 uid="uid://dul2oxghx887c"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_62di8"]
+[ext_resource type="Texture2D" uid="uid://clvs3g1lo8b6b" path="res://tiles/grass1.png" id="2_fcq1s"]
+[ext_resource type="Texture2D" uid="uid://dysh6345xcpax" path="res://tiles/grass2.png" id="3_qn5fp"]
+[ext_resource type="Texture2D" uid="uid://db15nfwksapuo" path="res://tiles/grass3.png" id="4_1gnh1"]
+[ext_resource type="Script" path="res://rover.gd" id="5_6e3lk"]
+[ext_resource type="Texture2D" uid="uid://uisfun4k6dtc" path="res://rover/rover1.png" id="6_0qh0j"]
+[ext_resource type="Texture2D" uid="uid://cqdmvngo0a3k1" path="res://rover/rover2.png" id="7_s42b8"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ce05g"]
+texture = ExtResource("2_fcq1s")
+texture_region_size = Vector2i(24, 24)
+use_texture_padding = false
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uodtj"]
+texture = ExtResource("3_qn5fp")
+texture_region_size = Vector2i(24, 24)
+use_texture_padding = false
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3ru2c"]
+texture = ExtResource("4_1gnh1")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mrvon"]
+texture = ExtResource("2_fcq1s")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_34ckj"]
+texture = ExtResource("2_fcq1s")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5afvv"]
+texture = ExtResource("2_fcq1s")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_22mlo"]
+texture = ExtResource("3_qn5fp")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_cyh7r"]
+tile_size = Vector2i(24, 24)
+sources/1 = SubResource("TileSetAtlasSource_ce05g")
+sources/2 = SubResource("TileSetAtlasSource_uodtj")
+sources/3 = SubResource("TileSetAtlasSource_3ru2c")
+sources/4 = SubResource("TileSetAtlasSource_mrvon")
+sources/5 = SubResource("TileSetAtlasSource_34ckj")
+sources/6 = SubResource("TileSetAtlasSource_5afvv")
+sources/7 = SubResource("TileSetAtlasSource_22mlo")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hspl7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_0qh0j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_0qh0j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_s42b8")
+}],
+"loop": true,
+"name": &"move",
+"speed": 15.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_veqv0"]
+size = Vector2(23, 17)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rv7cm"]
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -13.48
+linear_accel_max = 8.99
+color = Color(0.492038, 0.315498, 0.0882635, 1)
+anim_speed_max = 6.12
+anim_offset_min = 0.809
+anim_offset_max = 0.809
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_62di8")
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(1, -1)
+tile_set = SubResource("TileSet_cyh7r")
+format = 2
+
+[node name="Rover" type="CharacterBody2D" parent="."]
+slide_on_ceiling = false
+script = ExtResource("5_6e3lk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Rover"]
+sprite_frames = SubResource("SpriteFrames_hspl7")
+animation = &"move"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rover"]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_veqv0")
+
+[node name="Camera2D" type="Camera2D" parent="Rover"]
+zoom = Vector2(3.5, 3.5)
+rotation_smoothing_enabled = true
+
+[node name="RightWheelDirt" type="GPUParticles2D" parent="Rover"]
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_rv7cm")
+
+[node name="RightTrailLine" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(0.424374, 0.221492, 0.0175908, 1)
+
+[node name="LeftTrailLine" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(0.424374, 0.221492, 0.0175908, 1)
