@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dul2oxghx887c"]
+[gd_scene load_steps=22 format=3 uid="uid://dul2oxghx887c"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_62di8"]
 [ext_resource type="Texture2D" uid="uid://clvs3g1lo8b6b" path="res://tiles/grass1.png" id="2_fcq1s"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://db15nfwksapuo" path="res://tiles/grass3.png" id="4_1gnh1"]
 [ext_resource type="Script" path="res://rover.gd" id="5_6e3lk"]
 [ext_resource type="Texture2D" uid="uid://uisfun4k6dtc" path="res://rover/rover1.png" id="6_0qh0j"]
+[ext_resource type="Texture2D" uid="uid://ci1d82wgbixhx" path="res://tiles/beach1.png" id="6_wxc2i"]
 [ext_resource type="Texture2D" uid="uid://cqdmvngo0a3k1" path="res://rover/rover2.png" id="7_s42b8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ybml7"]
@@ -51,6 +52,11 @@ texture = ExtResource("3_qn5fp")
 texture_region_size = Vector2i(24, 24)
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bwldg"]
+texture = ExtResource("6_wxc2i")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_cyh7r"]
 tile_size = Vector2i(24, 24)
 sources/1 = SubResource("TileSetAtlasSource_ce05g")
@@ -61,6 +67,7 @@ sources/5 = SubResource("TileSetAtlasSource_34ckj")
 sources/6 = SubResource("TileSetAtlasSource_5afvv")
 sources/7 = SubResource("TileSetAtlasSource_22mlo")
 sources/0 = SubResource("TileSetAtlasSource_ybml7")
+sources/8 = SubResource("TileSetAtlasSource_bwldg")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hspl7"]
 animations = [{
