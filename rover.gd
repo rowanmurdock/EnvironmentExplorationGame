@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 90
+@export var speed = 300
 @export var rotation_speed = 3.5
 @export var trail_length = 5000
 @export var right_wheel_offset = Vector2(5, 6) 
@@ -14,7 +14,7 @@ extends CharacterBody2D
 var rotation_direction = 0
 
 func _ready():
-	position = Vector2(200, 200)
+	position = Vector2i(200, 200)
 	right_trail.z_index = 0
 	z_index = 2
 	
