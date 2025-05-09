@@ -1,20 +1,22 @@
 extends CharacterBody2D
 
-@export var speed = 300
+@export var speed = 100
 @export var rotation_speed = 3.5
-@export var trail_length = 5000
+@export var trail_length = 500
 @export var right_wheel_offset = Vector2(5, 6) 
 @export var left_wheel_offset = Vector2(5, -7)
 @export var right_bot_wheel_offset = Vector2(-8, 6) 
 @export var left_bot_wheel_offset = Vector2(-8, -7)
 
+@onready var map = $"../TerrainMap"
 @onready var right_trail: Line2D = $"../RightTrailLine"
 @onready var left_trail: Line2D = $"../LeftTrailLine"
 
 var rotation_direction = 0
 
 func _ready():
-	position = Vector2i(200, 200)
+	var world_pos = map.map_to_local(Vector2i(500, 250))
+	position = world_pos
 	right_trail.z_index = 0
 	z_index = 2
 	
@@ -26,9 +28,9 @@ func get_input():
 
 func move_anim():
 	if velocity.length() > 0 or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"):
-		$AnimatedSprite2D.play("move")
+		$roverbody.play("move")
 	else:
-		$AnimatedSprite2D.play("default")
+		$roverbody.play("default")
 		
 
 
@@ -46,6 +48,8 @@ func _physics_process(delta):
 	get_input()
 	rotation += rotation_direction * rotation_speed * delta
 	move_and_slide()
+	if Input.is_action_just_pressed("scan"):
+		$scanner.start_scan()
 	
 	
 	if velocity.length() > 0 or Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left"):

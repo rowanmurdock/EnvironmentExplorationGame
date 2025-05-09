@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dul2oxghx887c"]
+[gd_scene load_steps=37 format=3 uid="uid://dul2oxghx887c"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_62di8"]
 [ext_resource type="Texture2D" uid="uid://clvs3g1lo8b6b" path="res://tiles/grass1.png" id="2_fcq1s"]
@@ -9,6 +9,19 @@
 [ext_resource type="Texture2D" uid="uid://uisfun4k6dtc" path="res://rover/rover1.png" id="6_0qh0j"]
 [ext_resource type="Texture2D" uid="uid://ci1d82wgbixhx" path="res://tiles/beach1.png" id="6_wxc2i"]
 [ext_resource type="Texture2D" uid="uid://cqdmvngo0a3k1" path="res://rover/rover2.png" id="7_s42b8"]
+[ext_resource type="Script" path="res://scanner.gd" id="10_ppfb8"]
+[ext_resource type="Texture2D" uid="uid://bbhy5dgs1f48s" path="res://rover/radar1.png" id="11_e270n"]
+[ext_resource type="Texture2D" uid="uid://bf6dc08xns3vq" path="res://rover/radar2.png" id="12_8ppqp"]
+[ext_resource type="Texture2D" uid="uid://b0s8bti67ac1p" path="res://rover/radar3.png" id="13_pomsl"]
+[ext_resource type="Texture2D" uid="uid://dpe53kw7s5n0h" path="res://rover/radar4.png" id="14_fb4lx"]
+[ext_resource type="Texture2D" uid="uid://bfvclo3jcey6o" path="res://rover/radar5.png" id="15_j0ugq"]
+[ext_resource type="Texture2D" uid="uid://c1tbi8sdjlq7p" path="res://rover/radar6.png" id="16_54yns"]
+[ext_resource type="Texture2D" uid="uid://cpmnbwr83mm6f" path="res://rover/radar7.png" id="17_72j1u"]
+[ext_resource type="Texture2D" uid="uid://eak6vneaqk8m" path="res://rover/radar8.png" id="18_wyd3w"]
+[ext_resource type="Texture2D" uid="uid://d4ayef6rcol8y" path="res://rover/radar9.png" id="19_1058v"]
+[ext_resource type="Texture2D" uid="uid://cufjhirf0dsyp" path="res://rover/radar10.png" id="20_l7gxp"]
+[ext_resource type="Texture2D" uid="uid://d18j8rrof8hjp" path="res://rover/radar11.png" id="21_07i3u"]
+[ext_resource type="Texture2D" uid="uid://wej1ey352to5" path="res://rover/radar12.png" id="22_eqy5s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ybml7"]
 texture = ExtResource("2_g8453")
@@ -94,10 +107,57 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_veqv0"]
 size = Vector2(23, 17)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_rrwut"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_e270n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_8ppqp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_pomsl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_fb4lx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j0ugq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_54yns")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_72j1u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_wyd3w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_1058v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_l7gxp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_07i3u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_eqy5s")
+}],
+"loop": true,
+"name": &"scan",
+"speed": 11.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ojkaf"]
+size = Vector2(18, 26)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_62di8")
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="TerrainMap" type="TileMap" parent="."]
 position = Vector2(1, -1)
 tile_set = SubResource("TileSet_cyh7r")
 format = 2
@@ -106,17 +166,31 @@ format = 2
 slide_on_ceiling = false
 script = ExtResource("5_6e3lk")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Rover"]
+[node name="roverbody" type="AnimatedSprite2D" parent="Rover"]
 sprite_frames = SubResource("SpriteFrames_hspl7")
 animation = &"move"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Rover"]
+[node name="rovercollision" type="CollisionShape2D" parent="Rover"]
 position = Vector2(0.5, -0.5)
 shape = SubResource("RectangleShape2D_veqv0")
 
-[node name="Camera2D" type="Camera2D" parent="Rover"]
+[node name="rovercamera" type="Camera2D" parent="Rover"]
 zoom = Vector2(3.5, 3.5)
 rotation_smoothing_enabled = true
+
+[node name="scanner" type="Area2D" parent="Rover"]
+script = ExtResource("10_ppfb8")
+
+[node name="roverscanner" type="AnimatedSprite2D" parent="Rover/scanner"]
+position = Vector2(24, 0)
+rotation = 1.57086
+sprite_frames = SubResource("SpriteFrames_rrwut")
+animation = &"scan"
+frame_progress = 0.425078
+
+[node name="scannercollision" type="CollisionShape2D" parent="Rover/scanner"]
+position = Vector2(21, 0)
+shape = SubResource("RectangleShape2D_ojkaf")
 
 [node name="RightTrailLine" type="Line2D" parent="."]
 width = 2.0
